@@ -33,7 +33,7 @@ function Search() {
       const checkOutDate = format(data.checkOutDate, "yyyy-MM-dd");
       console.log(checkInDate);
       const response = await axios.get(
-        "http://localhost:6969/api/hotel-offers",
+        "http://localhost:3131/api/hotel-offers",
         {
           params: { cityCode, checkInDate, checkOutDate },
         }

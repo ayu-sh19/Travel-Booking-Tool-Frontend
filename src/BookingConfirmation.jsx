@@ -17,7 +17,7 @@ function BookingConfirmation() {
   const bookHotel = async (guestInfo) => {
     try {
       return await axios.post(
-        "http://localhost:6969/api/booking",
+        "http://localhost:3131/api/booking",
         {
           data: {
             type: "hotel-order",

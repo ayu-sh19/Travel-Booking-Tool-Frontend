@@ -43,7 +43,7 @@ function Book() {
 
   async function book() {
     try {
-      return await axios.get("http://localhost:6969/api/book-hotel", {
+      return await axios.get("http://localhost:3131/api/book-hotel", {
         params: { id },
       });
     } catch (error) {
