@@ -12,17 +12,43 @@ import { LocalizationProvider } from "@mui/x-date-pickers";
 import { format } from "date-fns";
 import Box from "@mui/material/Box";
 import TextField from "@mui/material/TextField";
+import { createTheme, ThemeProvider } from "@mui/material/styles";
 
 function Search() {
   const { control, register, handleSubmit } = useForm();
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
   const [hotels, setHotels] = useState([]);
-  // const authToken = useSelector((state) => state.auth.userAuthToken);
+  const color = "#FFFFFF";
 
-  // console.log(authToken);
+  const theme = createTheme({
+    components: {
+      MuiIconButton: {
+        styleOverrides: {
+          sizeMedium: {
+            color
+          }
+        }
+      },
+      MuiOutlinedInput: {
+        styleOverrides: {
+          root: {
+            color
+          }
+        }
+      },
+      MuiInputLabel: {
+        styleOverrides: {
+          root: {
+            color
+          }
+        }
+      }
+    }
+  });
+  
   const hotelSearch = async (data) => {
-    // e.preventDefault();
+
     setLoading(true);
     setError(null);
 
@@ -50,87 +76,92 @@ function Search() {
   return (
     <div className="flex items-center mt-4 mr-20 ml-20 justify-center  flex-col">
       <div
-        className={`mx-auto w-full  bg-gray-100 rounded-xl p-10 border border-black/10 flex flex-col`}
+        className={`mx-auto w-full dark:bg-gray-800 dark:border-gray-700 rounded-xl p-10 border border-black/10 flex flex-col text-white`}
       >
         <h2 className="text-center text-2xl font-bold leading-tight">
           Search Hotels
         </h2>
-        <LocalizationProvider dateAdapter={AdapterDayjs}>
-          <form onSubmit={handleSubmit(hotelSearch)} className="mt-8">
-            <div className="space-y-5 flex flex-col items-center justify-center ">
-              <div className=" flex justify-center gap-10">
-                <Box
-                  sx={{ "& > :not(style)": { width: "231px" } }}
-                  noValidate
-                  autoComplete="on"
-                >
+        <ThemeProvider theme={theme}>
+          <LocalizationProvider dateAdapter={AdapterDayjs}>
+            <form onSubmit={handleSubmit(hotelSearch)} className="mt-8">
+              <div className="space-y-5 flex flex-col items-center justify-center ">
+                <div className=" flex justify-center gap-10  text-white">
+                  <Box
+                    sx={{ "& > :not(style)": { width: "231px" } }}
+                    noValidate
+                    autoComplete="on"
+                  >
+                    <Controller
+                      name="cityCode"
+                      control={control}
+                      defaultValue=""
+                      render={({ field }) => (
+                        <TextField
+                          {...field}
+                          id="outlined-basic"
+                          label="Location"
+                          variant="outlined"
+                          sx={{ label: { color } }}
+                        />
+                      )}
+                    />{" "}
+                  </Box>
                   <Controller
-                    name="cityCode"
+                    name="checkInDate"
                     control={control}
-                    defaultValue=""
+                    defaultValue={null}
                     render={({ field }) => (
-                      <TextField
-                        {...field}
-                        id="outlined-basic"
-                        label="Location"
-                        variant="outlined"
+                      <DatePicker
+                        label="Check In Date"
+                        value={field.value}
+                        format="DD-MM-YYYY"
+                        onChange={(checkInDate) => field.onChange(checkInDate)}
+                        renderInput={(params) => (
+                          <TextField
+                            {...params}
+                            fullWidth
+                          />
+                        )}
                       />
                     )}
-                  />{" "}
-                </Box>
-
-                <Controller
-                  name="checkInDate"
-                  control={control}
-                  defaultValue={null}
-                  render={({ field }) => (
-                    <DatePicker
-                      label="Check In Date"
-                      value={field.value}
-                      format="DD-MM-YYYY"
-                      onChange={(checkInDate) => field.onChange(checkInDate)}
-                      renderInput={(params) => (
-                        <TextField {...params} fullWidth />
-                      )}
-                    />
+                  />
+                  <Controller
+                    name="checkOutDate"
+                    control={control}
+                    defaultValue={null}
+                    render={({ field }) => (
+                      <DatePicker
+                        label="Check Out Date"
+                        value={field.value}
+                        format="DD-MM-YYYY"
+                        onChange={(checkOutDate) => field.onChange(checkOutDate)}
+                        renderInput={(params) => (
+                          <TextField {...params} fullWidth />
+                        )}
+                      />
+                    )}
+                  />
+                </div>
+                <Button
+                  type="submit"
+                  variant="contained"
+                  color="primary"
+                  disabled={loading}
+                  style={{ width: "100px", height: "40px" }}
+                >
+                  {loading ? (
+                    <div className="flex items-center gap-1">
+                      <CircularProgress size={18} style={{'color': 'yellow'}} />
+                      {/* <h4 className="text">Loading</h4> */}
+                    </div>
+                  ) : (
+                    "Search"
                   )}
-                />
-                <Controller
-                  name="checkOutDate"
-                  control={control}
-                  defaultValue={null}
-                  render={({ field }) => (
-                    <DatePicker
-                      label="Check Out Date"
-                      value={field.value}
-                      format="DD-MM-YYYY"
-                      onChange={(checkOutDate) => field.onChange(checkOutDate)}
-                      renderInput={(params) => (
-                        <TextField {...params} fullWidth />
-                      )}
-                    />
-                  )}
-                />
+                </Button>
               </div>
-              <Button
-                type="submit"
-                variant="contained"
-                color="primary"
-                disabled={loading}
-                style={{ width: "100px", height: "40px" }}
-              >
-                {loading ? (
-                  <div className="flex items-center gap-1">
-                    <CircularProgress size={18} />
-                    {/* <h4 className="text">Loading</h4> */}
-                  </div>
-                ) : (
-                  "Search"
-                )}
-              </Button>
-            </div>
-          </form>
-        </LocalizationProvider>
+            </form>
+          </LocalizationProvider>
+        </ThemeProvider>
       </div>
       {error && <p style={{ color: "red" }}>{error}</p>}
       <div className="flex flex-col mt-10">
@@ -157,7 +188,7 @@ function HotelList({ hotels }) {
   }
   return (
     <div>
-      <h2>Hotel Offers</h2>
+      <p className="text-2xl p-2">Hotel Offers</p>
       <ul
         style={{ listStyle: "none", padding: 0 }}
         className="flex flex-col gap-4"
@@ -173,7 +204,8 @@ function HotelList({ hotels }) {
               flexWrap: "wrap",
               gap: "10px",
             }}
-            className="rounded-2xl items-center"
+            className="rounded-2xl items-center  dark:bg-gray-800 text-white dark:border-gray-700"
+            
           >
             <div className="flex flex-col mr-auto">
               <h3>{hotel.hotel.name}</h3>
