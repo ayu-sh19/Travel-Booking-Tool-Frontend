@@ -11,9 +11,9 @@ function BookingConfirmation() {
   const [loading, setLoading] = useState(true);
   const [booking, setBooking] = useState();
   const [bookingFailure, setBookingFailure] = useState(false);
-
+  const guestInfo = useSelector((state) => state.auth.bookingData);
   const [error, setError] = useState();
-  const bookHotel = async (data) => {
+  const bookHotel = async (guestInfo) => {
     try {
       return await axios.post(
         "http://localhost:6969/api/booking",
@@ -24,10 +24,10 @@ function BookingConfirmation() {
               {
                 tid: 1,
                 title: "MR",
-                firstName: "BOB",
-                lastName: "SMITH",
+                firstName: `${guestInfo.data.firstName}`,
+                lastName: `${guestInfo.data.lastName}`,
                 phone: "+33679278416",
-                email: "bob.smith@email.com",
+                email: `${guestInfo.data.email}`,
               },
             ],
             travelAgent: {
@@ -68,7 +68,7 @@ function BookingConfirmation() {
   };
 
   useEffect(() => {
-    bookHotel()
+    bookHotel(guestInfo)
       .then((data) => {
         try {
           const bookingConfirmationData = data.data.data;

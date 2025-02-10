@@ -13,7 +13,6 @@ import { format } from "date-fns";
 import Box from "@mui/material/Box";
 import TextField from "@mui/material/TextField";
 
-
 function Search() {
   const { control, register, handleSubmit } = useForm();
   const [loading, setLoading] = useState(false);
@@ -61,7 +60,6 @@ function Search() {
             <div className="space-y-5 flex flex-col items-center justify-center ">
               <div className=" flex justify-center gap-10">
                 <Box
-                  component="form"
                   sx={{ "& > :not(style)": { width: "231px" } }}
                   noValidate
                   autoComplete="on"
@@ -135,7 +133,9 @@ function Search() {
         </LocalizationProvider>
       </div>
       {error && <p style={{ color: "red" }}>{error}</p>}
-      <div className="flex flex-col mt-10">{!error ? <HotelList hotels={hotels} /> : ""}</div>
+      <div className="flex flex-col mt-10">
+        {!error ? <HotelList hotels={hotels} /> : ""}
+      </div>
     </div>
   );
 }
@@ -158,7 +158,10 @@ function HotelList({ hotels }) {
   return (
     <div>
       <h2>Hotel Offers</h2>
-      <ul style={{ listStyle: "none", padding: 0 }} className="flex flex-col gap-4">
+      <ul
+        style={{ listStyle: "none", padding: 0 }}
+        className="flex flex-col gap-4"
+      >
         {hotels.map((hotel, index) => (
           <li
             key={index}
