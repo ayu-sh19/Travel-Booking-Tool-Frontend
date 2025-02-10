@@ -3,6 +3,7 @@ import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import globe from "../src/assets/globe.gif";
+import confetti from "canvas-confetti";
 
 function BookingConfirmation() {
   const { offerId } = useParams();
@@ -67,6 +68,14 @@ function BookingConfirmation() {
     }
   };
 
+  function fire() {
+    confetti({
+      particleCount: 100,
+      spread: 100,
+      origin: { y: 0.8 },
+    });
+  }
+
   useEffect(() => {
     bookHotel(guestInfo)
       .then((data) => {
@@ -75,14 +84,14 @@ function BookingConfirmation() {
           if (bookingConfirmationData) {
             setBooking(bookingConfirmationData);
             console.log(bookingConfirmationData);
-            console.log(booking?.guests[0].firstName);
+            fire();
           }
         } catch (error) {
           setBookingFailure(true);
           console.error("Booking Confirmation Failed", error);
         }
       })
-      .finally(() => setLoading(false));
+      .finally(() => setLoading(false))
   }, []);
   return !loading ? (
     !bookingFailure ? (
