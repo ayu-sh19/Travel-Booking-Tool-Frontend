@@ -5,6 +5,7 @@ import { useNavigate } from "react-router-dom";
 import { Button } from "@mui/material";
 import { format } from "date-fns";
 import axios from "axios";
+import config from "../config/config";
 
 function HotelList() {
   const [loading, setLoading] = useState(true);
@@ -20,7 +21,7 @@ function HotelList() {
       const checkOutDate = format(data.checkOutDate, "yyyy-MM-dd");
 
       const response = await axios.get(
-        "http://localhost:3131/api/hotel-offers",
+        `${config.apiUrl}/api/hotel-offers`,
         {
           params: { cityCode, checkInDate, checkOutDate },
         }
