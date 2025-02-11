@@ -3,7 +3,8 @@ import { createSlice } from "@reduxjs/toolkit";
 const initialState = {
   userAuthToken: null,
   bookingData: null ,
-  hotelSearchData: null
+  hotelSearchData: null,
+  theme: null
 };
 export const authSlice = createSlice({
   name: "auth",
@@ -17,10 +18,13 @@ export const authSlice = createSlice({
     },
     setHotelSearchData: (state,action) => {
       state.hotelSearchData = action.payload;
+    },
+    setTheme: (state,action) => {
+      state.theme = action.payload;
     }
   },
 });
 
-export const { setToken, setBookData,setHotelSearchData } = authSlice.actions;
+export const { setToken, setBookData,setHotelSearchData, setTheme } = authSlice.actions;
 
 export default authSlice.reducer;

@@ -95,8 +95,8 @@ function BookingConfirmation() {
   }, []);
   return !loading ? (
     !bookingFailure ? (
-      <div className="flex justify-center h-screen">
-        <div className="w-full max-w-sm p-4 m-auto bg-white border border-gray-200 rounded-lg shadow-sm sm:p-8 dark:bg-gray-800 dark:border-gray-700">
+      <div className="flex justify-center h-screen w-full  fixed overflow-hidden">
+        <div className="w-full max-w-sm mb-50 p-4 m-auto bg-white border border-gray-200 rounded-lg shadow-sm sm:p-8 dark:bg-gray-800 dark:border-gray-700">
           <h5 className="mb-4 text-xl font-medium text-gray-500 dark:text-gray-400">
             Hotel Confirmation
           </h5>
@@ -112,7 +112,7 @@ function BookingConfirmation() {
             </div> */}
           <ul role="list" className="space-y-5 my-7">
             <li className="flex items-center">
-              <span className="text-base font-normal  text-white ">
+              <span className="text-base font-normal  text-gray-900 dark:text-white ">
                 Confirmation Number :{" "}
                 {
                   booking?.hotelBookings[0]?.hotelProviderInformation[0]
@@ -121,13 +121,13 @@ function BookingConfirmation() {
               </span>
             </li>
             <li className="flex">
-              <span className="text-base font-normal  text-white ">
+              <span className="text-base font-normal text-gray-900 dark:text-white">
                 Guest : {booking?.guests[0].firstName}{" "}
                 {booking?.guests[0].lastName}
               </span>
             </li>
             <li className="flex">
-              <span className="text-base font-normal  text-white ">
+              <span className="text-base font-normal text-gray-900 dark:text-white">
                 Check In : {booking?.hotelBookings[0].hotelOffer?.checkInDate}{" "}
                 {/* {
                   booking?.hotelBookings[0].hotelOffer?.policies.checkInOut
@@ -137,7 +137,7 @@ function BookingConfirmation() {
               </span>
             </li>
             <li className="flex">
-              <span className="text-base font-normal text-white ">
+              <span className="text-base font-normal text-gray-900 dark:text-white">
                 Check Out : {booking?.hotelBookings[0].hotelOffer?.checkOutDate}{" "}
                 {/* {
                   booking?.hotelBookings[0].hotelOffer?.policies.checkInOut
@@ -150,7 +150,7 @@ function BookingConfirmation() {
               </span>
             </li>
             <li className="flex">
-              <span className="text-base font-normal text-white ">
+              <span className="text-base font-normal text-gray-900 dark:text-white">
                 {/* Total Price : {hotel?.offers[0]?.price.currency}{" "}
                 {hotel?.offers[0]?.price.total} */}
               </span>
@@ -159,7 +159,7 @@ function BookingConfirmation() {
         </div>
       </div>
     ) : (
-      <div className="flex justify-center h-screen">
+      <div className="flex justify-center h-screen w-full fixed overflow-hidden items-center">
         <div
           className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative m-auto w-5xl"
           role="alert"

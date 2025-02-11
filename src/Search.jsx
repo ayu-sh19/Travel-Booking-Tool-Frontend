@@ -13,48 +13,98 @@ import Box from "@mui/material/Box";
 import TextField from "@mui/material/TextField";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { setHotelSearchData } from "./store/authSlice";
+import { useSelector } from "react-redux";
 
 function Search() {
   const { control, handleSubmit } = useForm();
   const [error, setError] = useState("");
-  const [hotels, setHotels] = useState([]);
   const color = "#FFFFFF";
+  const colorBlack = "#000000";
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const darkMode = useSelector((state) => state.auth.theme);
 
-  const theme = createTheme({
-    components: {
-      MuiIconButton: {
-        styleOverrides: {
-          sizeMedium: {
-            color,
-          },
-        },
-      },
-      MuiOutlinedInput: {
-        styleOverrides: {
-          root: {
-            color,
-            "& .MuiOutlinedInput-notchedOutline": { borderColor: "white" },
-            "&:hover .MuiOutlinedInput-notchedOutline": {
-              borderColor: "white",
-            },
-            "&.Mui-focused .MuiOutlinedInput-notchedOutline": {
-              borderColor: "white",
-            },
-          },
-        },
-      },
-      MuiInputLabel: {
-        styleOverrides: {
-          root: {
-            color,
-            "&.Mui-focused": { color: "white" },
-          },
-        },
+  const darkTheme = createTheme(
+    {
+      palette: {
+        mode: "dark",
       },
     },
-  });
+    {
+      components: {
+        MuiIconButton: {
+          styleOverrides: {
+            sizeMedium: {
+              color,
+            },
+          },
+        },
+        MuiOutlinedInput: {
+          styleOverrides: {
+            root: {
+              color,
+              "& .MuiOutlinedInput-notchedOutline": { borderColor: "white" },
+              "&:hover .MuiOutlinedInput-notchedOutline": {
+                borderColor: "white",
+              },
+              "&.Mui-focused .MuiOutlinedInput-notchedOutline": {
+                borderColor: "white",
+              },
+            },
+          },
+        },
+        MuiInputLabel: {
+          styleOverrides: {
+            root: {
+              color,
+              "&.Mui-focused": { color: "white" },
+            },
+          },
+        },
+      },
+    }
+  );
+
+  const lightTheme = createTheme(
+    {
+      palette: {
+        mode: "light",
+      },
+    },
+    {
+      components: {
+        MuiIconButton: {
+          styleOverrides: {
+            sizeMedium: {
+              colorBlack,
+            },
+          },
+        },
+        MuiOutlinedInput: {
+          styleOverrides: {
+            root: {
+              colorBlack,
+              "& .MuiOutlinedInput-notchedOutline": { borderColor: "black" },
+              "&:hover .MuiOutlinedInput-notchedOutline": {
+                borderColor: "black",
+              },
+              "&.Mui-focused .MuiOutlinedInput-notchedOutline": {
+                borderColor: "black",
+              },
+            },
+          },
+        },
+        MuiInputLabel: {
+          styleOverrides: {
+            root: {
+              colorBlack,
+              "&.Mui-focused": { color: "black" },
+            },
+          },
+        },
+      },
+    }
+  );
 
   const search = async (data) => {
     setError(null);
@@ -76,18 +126,18 @@ function Search() {
   };
   return (
     <div
-      className="flex fixed overflow-hidden items-center justify-center w-full flex-col bg-[url('./assets/resort.jpg')] bg-cover "
+      className="flex fixed overflow-hidden items-center justify-center w-full flex-col bg-[url('./assets/desert.jpg')] bg-cover "
       style={{
         minHeight: "100vh",
       }}
     >
       <div
-        className={`mx-auto h-auto  dark:bg-gray-900 dark:border-gray-700 opacity-90 rounded-xl p-10 border  border-black/10 flex flex-col text-white`}
+        className={`mx-auto h-auto  dark:bg-gray-900 dark:border-gray-700 opacity-90 rounded-xl p-10 border  border-black/10 flex flex-col text-gray-900 dark:text-white`}
       >
         <h2 className="text-center text-2xl font-bold leading-tight">
           Search Hotels
         </h2>
-        <ThemeProvider theme={theme}>
+        <ThemeProvider theme={darkMode ? darkTheme : lightTheme}>
           <LocalizationProvider dateAdapter={AdapterDayjs}>
             <form onSubmit={handleSubmit(search)} className="mt-8">
               <div className="space-y-5 flex flex-col items-center justify-center ">
