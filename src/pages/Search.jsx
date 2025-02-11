@@ -12,7 +12,7 @@ import { format } from "date-fns";
 import Box from "@mui/material/Box";
 import TextField from "@mui/material/TextField";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
-import { setHotelSearchData } from "./store/authSlice";
+import { setHotelSearchData } from "../store/authSlice";
 import { useSelector } from "react-redux";
 
 function Search() {

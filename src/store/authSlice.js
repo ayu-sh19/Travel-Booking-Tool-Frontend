@@ -1,30 +1,37 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
-  userAuthToken: null,
-  bookingData: null ,
+  bookingData: null,
   hotelSearchData: null,
-  theme: null
+  theme: null,
+  userData: null,
+  status: false,
 };
 export const authSlice = createSlice({
   name: "auth",
   initialState,
   reducers: {
-    setToken: (state, action) => {
-      state.userAuthToken = action.payload;
+    login: (state, action) => {
+      state.status = true;
+      state.userData = action.payload;
     },
-    setBookData: (state,action) => {
-      state.bookingData = action.payload
+    logout: (state, action) => {
+      state.status = false;
+      state.userData = null;
     },
-    setHotelSearchData: (state,action) => {
+    setBookData: (state, action) => {
+      state.bookingData = action.payload;
+    },
+    setHotelSearchData: (state, action) => {
       state.hotelSearchData = action.payload;
     },
-    setTheme: (state,action) => {
+    setTheme: (state, action) => {
       state.theme = action.payload;
-    }
+    },
   },
 });
 
-export const { setToken, setBookData,setHotelSearchData, setTheme } = authSlice.actions;
+export const { login, logout, setBookData, setHotelSearchData, setTheme } =
+  authSlice.actions;
 
 export default authSlice.reducer;

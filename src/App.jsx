@@ -1,13 +1,11 @@
 // src/App.js
 import React, { useEffect, useState } from "react";
-import axios from "axios";
-import { Button } from "@mui/material";
-import CircularProgress from "@mui/material/CircularProgress";
-import { useDispatch, useSelector } from "react-redux";
 import { Outlet } from "react-router-dom";
-import { setToken } from "./store/authSlice";
 import Header from "./components/Header";
 import { ModeThemeProvider } from "./context/context";
+import authService from "./appwrite/auth";
+import { useDispatch } from "react-redux";
+import { login, logout } from "./store/authSlice";
 
 function App() {
   const [themeMode, setThemeMode] = useState("dark");
@@ -18,10 +16,26 @@ function App() {
     setThemeMode("dark");
   };
 
+  const [loading, setLoading] = useState(true);
+  const dispatch = useDispatch();
+
   useEffect(() => {
     document.querySelector("html").classList.remove("light", "dark");
     document.querySelector("html").classList.add(themeMode);
   }, [themeMode]);
+
+  useEffect(() => {
+    authService
+      .getCurrentUser()
+      .then((userData) => {
+        if (userData) {
+          dispatch(login({ userData }));
+        } else {
+          dispatch(logout());
+        }
+      })
+      .finally(() => setLoading(false));
+  }, []);
 
   return (
     <div className="w-full block">

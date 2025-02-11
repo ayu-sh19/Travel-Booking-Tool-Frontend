@@ -19,6 +19,7 @@
     "@mui/x-date-pickers": "^7.26.0",
     "@reduxjs/toolkit": "^2.5.1",
     "@tailwindcss/vite": "^4.0.4",
+    "appwrite": "^17.0.0",
     "axios": "^1.7.9",
     "canvas-confetti": "^1.9.3",
     "date-fns": "^4.1.0",

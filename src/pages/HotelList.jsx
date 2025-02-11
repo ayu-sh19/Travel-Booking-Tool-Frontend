@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
-import globe from "./assets/globe.gif";
+import globe from "../assets/globe.gif";
 import { useNavigate } from "react-router-dom";
 import { Button } from "@mui/material";
 import { format } from "date-fns";

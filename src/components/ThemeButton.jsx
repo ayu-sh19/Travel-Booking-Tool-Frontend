@@ -16,7 +16,7 @@ function ThemeButton() {
     else lightTheme();
   };
   return (
-    <IconContext value={{color:'white'}}>
+    <IconContext value={{color:'white' , size: 30 }}>
       <div className="bg-yellow">
         <button onClick={themeToggle}>
           {dark && <IoMoon />}

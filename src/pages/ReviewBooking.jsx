@@ -3,17 +3,16 @@ import { useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
 import { Button } from "@mui/material";
 import axios from "axios";
-import globe from "../src/assets/globe.gif";
+import globe from "../assets/globe.gif";
 import { intervalToDuration } from "date-fns";
 import { useForm, Controller } from "react-hook-form";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { yellow } from "@mui/material/colors";
 import { useDispatch } from "react-redux";
-import { setBookData } from "./store/authSlice";
+import { setBookData } from "../store/authSlice";
 
 function Book() {
   const { id } = useParams();
-  // const authToken = useSelector((state) => state.auth.userAuthToken);
   const [hotel, setHotel] = useState();
   const [loading, setLoading] = useState(true);
   const [nights, setNights] = useState();

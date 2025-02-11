@@ -2,13 +2,12 @@ import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
-import globe from "../src/assets/globe.gif";
+import globe from "../assets/globe.gif";
 import confetti from "canvas-confetti";
 
 function BookingConfirmation() {
   const { offerId } = useParams();
   console.log(offerId);
-  // const authToken = useSelector((state) => state.auth.userAuthToken);
   const [loading, setLoading] = useState(true);
   const [booking, setBooking] = useState();
   const [bookingFailure, setBookingFailure] = useState(false);
