@@ -35,20 +35,20 @@ function Login() {
 
   return (
     <div
-      className="flex fixed overflow-hidden items-center justify-center w-full"
+      className="flex fixed overflow-hidden items-center justify-center w-full bg-[url('./assets/desert.jpg')] bg-cover"
       style={{
         minHeight: "100vh",
       }}
     >
       <div
-        className={`mx-auto w-full max-w-lg bg-gray-100 rounded-xl mb-25 p-10 border border-black/10`}
+        className={`mx-auto w-full max-w-lg bg-gray-100 rounded-xl mb-25 p-10 border border-black/10 dark:bg-gray-900`}
       >
-        <h2 className="text-center text-2xl font-bold leading-tight">
+        <h2 className="text-center dark:text-white text-2xl font-bold leading-tight">
           Sign in to your account
         </h2>
         <form onSubmit={handleSubmit(loginHandler)} className="mt-8">
           <div className="space-y-5">
-            <label className="inline-block mb-1 pl-1" htmlFor={id}>
+            <label className="inline-block mb-1 pl-1 dark:text-white" htmlFor={id}>
               Email:
             </label>
             <input
@@ -64,7 +64,7 @@ function Login() {
                 },
               })}
             />
-            <label className="inline-block mb-1 pl-1" htmlFor={id}>
+            <label className="inline-block mb-1 pl-1 dark:text-white" htmlFor={id}>
               Password
             </label>
             <input

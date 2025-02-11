@@ -3,7 +3,7 @@ import { createSlice } from "@reduxjs/toolkit";
 const initialState = {
   bookingData: null,
   hotelSearchData: null,
-  theme: null,
+  theme: true,
   userData: null,
   status: false,
 };

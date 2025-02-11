@@ -7,6 +7,7 @@ import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import LogoutBtn from "./LogoutBtn";
 import { IconContext } from "react-icons";
+import LoginBtn from "./LoginBtn";
 
 function Header() {
   const authStatus = useSelector((state) => {
@@ -26,13 +27,18 @@ function Header() {
               </IconContext>
             </Link>
           </div>
-          <ul className="ml-auto mr-12 flex gap-10">
+          <ul className="ml-auto mr-12 justify-center items-center flex gap-10">
             <li>
               <ThemeButton />
             </li>
             {authStatus && (
               <li>
                 <LogoutBtn />
+              </li>
+            )}
+            {!authStatus && (
+              <li>
+                <LoginBtn />
               </li>
             )}
           </ul>
