@@ -35,8 +35,7 @@ function Book() {
   function formData(data) {
     setGuestInfo(data);
     setGuestAdd(true);
-    const payload = 
-    dispatch(setBookData({data}));
+    const payload = dispatch(setBookData({ data }));
     setTimeout(() => setGuestAdd(false), 3000);
     console.log(data);
   }
@@ -263,7 +262,7 @@ function Book() {
       </div>
     </>
   ) : (
-    <div className=" w-full flex items-center h-screen">
+    <div className=" w-full fixed overflow-hidden flex items-center h-screen">
       <div className="m-auto w-30 h-30">
         <img src={globe}></img>
       </div>

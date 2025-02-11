@@ -91,7 +91,7 @@ function BookingConfirmation() {
           console.error("Booking Confirmation Failed", error);
         }
       })
-      .finally(() => setLoading(false))
+      .finally(() => setLoading(false));
   }, []);
   return !loading ? (
     !bookingFailure ? (
@@ -183,7 +183,7 @@ function BookingConfirmation() {
       </div>
     )
   ) : (
-    <div className=" w-full flex items-center h-screen">
+    <div className=" w-full fixed overflow-hidden flex items-center h-screen">
       <div className="m-auto w-30 h-30">
         <img src={globe}></img>
       </div>

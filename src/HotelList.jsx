@@ -41,50 +41,48 @@ function HotelList() {
     !hotels || hotels.length === 0 ? (
       <div className="mt-5"></div>
     ) : (
-      <div>
-        <p className="text-2xl p-2 text-white">Hotel Offers</p>
-        <ul
-          style={{ listStyle: "none", padding: 0 }}
-          className="flex flex-col gap-4"
-        >
+      <div className="flex flex-col items-center">
+        <div >
+          <p className="ml-0 text-3xl pt-3 text-gray-800 font-mono">Hotel Offers</p>
+        </div>
+        <ul class="max-w-lvh m-6 divide-yflex flex-col">
           {hotels.map((hotel, index) => (
-            <li
-              key={index}
-              style={{
-                border: "1px solid #ccc",
-                margin: "10px 0",
-                padding: "20px",
-                display: "flex",
-                flexWrap: "wrap",
-                gap: "10px",
-              }}
-              className="rounded-2xl items-center  dark:bg-gray-800 opacity-90 text-white dark:border-gray-700"
-            >
-              <div className="flex flex-col mr-auto">
-                <h3>{hotel.hotel.name}</h3>
-                <p>
-                  <span className="text-sm">
-                    {hotel.offers[0].price.currency}
-                  </span>{" "}
-                  <span className="text-xl">{hotel.offers[0].price.total}</span>
-                </p>
+            <li key={index} class="pb-3 sm:pb-4 ">
+              <div class="flex items-center space-x-4 rtl:space-x-reverse dark:bg-gray-900 mx-auto dark:border-gray-700 h-auto p-7 rounded-2xl">
+                <div class="flex-1 min-w-0">
+                  <p class="text-xl font-medium text-gray-900 truncate dark:text-white">
+                    {hotel.hotel.name}
+                  </p>
+                  <p class="text-sm text-gray-500 truncate dark:text-gray-400">
+                    <span className="text-sm">
+                      {hotel.offers[0].price.currency}
+                    </span>{" "}
+                    <span className="text-xl">
+                      {hotel.offers[0].price.total}
+                    </span>
+                  </p>
+                </div>
+                <div class="inline-flex items-center text-base font-semibold text-gray-900 dark:text-white">
+                  <Button
+                    type="button"
+                    variant="contained"
+                    color="primary"
+                    style={{ width: "100px", height: "40px" }}
+                    onClick={() =>
+                      navigate(`/book-hotel/${hotel.offers[0].id}`)
+                    }
+                  >
+                    Book
+                  </Button>
+                </div>
               </div>
-              <Button
-                type="button"
-                variant="contained"
-                color="primary"
-                style={{ width: "100px", height: "40px" }}
-                onClick={() => navigate(`/book-hotel/${hotel.offers[0].id}`)}
-              >
-                Book
-              </Button>
             </li>
           ))}
         </ul>
       </div>
     )
   ) : (
-    <div className=" w-full flex items-center h-screen">
+    <div className=" w-full fixed flex items-center min-h-screen overflow-hidden">
       <div className="m-auto w-30 h-30">
         <img src={globe}></img>
       </div>
