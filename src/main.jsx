@@ -10,6 +10,7 @@ import { store } from "./store/store.js";
 import { RouterProvider } from "react-router-dom";
 import Book from "./Book.jsx";
 import BookingConfirmation from "./BookingConfirmation.jsx";
+import HotelList from "./HotelList.jsx";
 
 const router = createBrowserRouter([
   {
@@ -21,12 +22,16 @@ const router = createBrowserRouter([
         element: <Search />,
       },
       {
+        path: "/search-results",
+        element: <HotelList />,
+      },
+      {
         path: "/book-hotel/:id",
-        element: <Book/>
+        element: <Book />,
       },
       {
         path: "/booking-confirmation/:offerId",
-        element: <BookingConfirmation/>
+        element: <BookingConfirmation />,
       },
     ],
   },

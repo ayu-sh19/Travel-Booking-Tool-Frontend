@@ -1,10 +1,9 @@
 import React from "react";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { useForm, Controller } from "react-hook-form";
 import { Button } from "@mui/material";
-import axios from "axios";
 import CircularProgress from "@mui/material/CircularProgress";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
@@ -13,79 +12,86 @@ import { format } from "date-fns";
 import Box from "@mui/material/Box";
 import TextField from "@mui/material/TextField";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
+import { setHotelSearchData } from "./store/authSlice";
 
 function Search() {
-  const { control, register, handleSubmit } = useForm();
-  const [loading, setLoading] = useState(false);
+  const { control, handleSubmit } = useForm();
   const [error, setError] = useState("");
   const [hotels, setHotels] = useState([]);
   const color = "#FFFFFF";
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const theme = createTheme({
     components: {
       MuiIconButton: {
         styleOverrides: {
           sizeMedium: {
-            color
-          }
-        }
+            color,
+          },
+        },
       },
       MuiOutlinedInput: {
         styleOverrides: {
           root: {
-            color
-          }
-        }
+            color,
+            "& .MuiOutlinedInput-notchedOutline": { borderColor: "white" },
+            "&:hover .MuiOutlinedInput-notchedOutline": {
+              borderColor: "white",
+            },
+            "&.Mui-focused .MuiOutlinedInput-notchedOutline": {
+              borderColor: "white",
+            },
+          },
+        },
       },
       MuiInputLabel: {
         styleOverrides: {
           root: {
-            color
-          }
-        }
-      }
-    }
+            color,
+            "&.Mui-focused": { color: "white" },
+          },
+        },
+      },
+    },
   });
-  
-  const hotelSearch = async (data) => {
 
-    setLoading(true);
+  const search = async (data) => {
     setError(null);
 
     try {
       const cityCode = data.cityCode;
-      console.log(cityCode);
       const checkInDate = format(data.checkInDate, "yyyy-MM-dd");
       const checkOutDate = format(data.checkOutDate, "yyyy-MM-dd");
-      console.log(checkInDate);
-      const response = await axios.get(
-        "http://localhost:3131/api/hotel-offers",
-        {
-          params: { cityCode, checkInDate, checkOutDate },
-        }
-      );
-      console.log(response.data.data);
-      setHotels(response.data.data || []);
+      const payload = { cityCode, checkInDate, checkOutDate };
+
+      console.log(payload);
+      dispatch(setHotelSearchData(payload));
     } catch (err) {
       console.error("Error fetching hotels:", err);
       setError("Failed to fetch hotels. Please try again.");
     } finally {
-      setLoading(false);
+      navigate("/search-results");
     }
   };
   return (
-    <div className="flex items-center mt-4 mr-20 ml-20 justify-center  flex-col">
+    <div
+      className="flex fixed overflow-hidden items-center justify-center w-full flex-col bg-[url('./assets/resort.jpg')] bg-cover "
+      style={{
+        minHeight: "100vh",
+      }}
+    >
       <div
-        className={`mx-auto w-full dark:bg-gray-800 dark:border-gray-700 rounded-xl p-10 border border-black/10 flex flex-col text-white`}
+        className={`mx-auto h-auto  dark:bg-gray-900 dark:border-gray-700 opacity-90 rounded-xl p-10 border  border-black/10 flex flex-col text-white`}
       >
         <h2 className="text-center text-2xl font-bold leading-tight">
           Search Hotels
         </h2>
         <ThemeProvider theme={theme}>
           <LocalizationProvider dateAdapter={AdapterDayjs}>
-            <form onSubmit={handleSubmit(hotelSearch)} className="mt-8">
+            <form onSubmit={handleSubmit(search)} className="mt-8">
               <div className="space-y-5 flex flex-col items-center justify-center ">
-                <div className=" flex justify-center gap-10  text-white">
+                <div className=" flex justify-center gap-10 text-gray-900 dark:text-white">
                   <Box
                     sx={{ "& > :not(style)": { width: "231px" } }}
                     noValidate
@@ -101,7 +107,6 @@ function Search() {
                           id="outlined-basic"
                           label="Location"
                           variant="outlined"
-                          sx={{ label: { color } }}
                         />
                       )}
                     />{" "}
@@ -117,10 +122,7 @@ function Search() {
                         format="DD-MM-YYYY"
                         onChange={(checkInDate) => field.onChange(checkInDate)}
                         renderInput={(params) => (
-                          <TextField
-                            {...params}
-                            fullWidth
-                          />
+                          <TextField {...params} fullWidth />
                         )}
                       />
                     )}
@@ -134,7 +136,9 @@ function Search() {
                         label="Check Out Date"
                         value={field.value}
                         format="DD-MM-YYYY"
-                        onChange={(checkOutDate) => field.onChange(checkOutDate)}
+                        onChange={(checkOutDate) =>
+                          field.onChange(checkOutDate)
+                        }
                         renderInput={(params) => (
                           <TextField {...params} fullWidth />
                         )}
@@ -146,95 +150,19 @@ function Search() {
                   type="submit"
                   variant="contained"
                   color="primary"
-                  disabled={loading}
                   style={{ width: "100px", height: "40px" }}
                 >
-                  {loading ? (
-                    <div className="flex items-center gap-1">
-                      <CircularProgress size={18} style={{'color': 'yellow'}} />
-                      {/* <h4 className="text">Loading</h4> */}
-                    </div>
-                  ) : (
-                    "Search"
-                  )}
+                  Search
                 </Button>
               </div>
             </form>
           </LocalizationProvider>
         </ThemeProvider>
       </div>
-      {error && <p style={{ color: "red" }}>{error}</p>}
-      <div className="flex flex-col mt-10">
+      {error && <p style={{ color: "white" }}>{error}</p>}
+      {/* <div className="flex flex-col mt-10">
         {!error ? <HotelList hotels={hotels} /> : ""}
-      </div>
-    </div>
-  );
-}
-
-function HotelList({ hotels }) {
-  console.log(hotels);
-  const dispatch = useDispatch();
-  const [loading, setLoading] = useState(false);
-  const navigate = useNavigate();
-  if (!hotels || hotels.length === 0) {
-    return (
-      <div className="mt-5">
-        <p>No hotels found. Try a different search.</p>
-      </div>
-    );
-    // return (<div>
-    //   <img src={globe} alt="loading..." />
-    // </div>)
-  }
-  return (
-    <div>
-      <p className="text-2xl p-2">Hotel Offers</p>
-      <ul
-        style={{ listStyle: "none", padding: 0 }}
-        className="flex flex-col gap-4"
-      >
-        {hotels.map((hotel, index) => (
-          <li
-            key={index}
-            style={{
-              border: "1px solid #ccc",
-              margin: "10px 0",
-              padding: "20px",
-              display: "flex",
-              flexWrap: "wrap",
-              gap: "10px",
-            }}
-            className="rounded-2xl items-center  dark:bg-gray-800 text-white dark:border-gray-700"
-            
-          >
-            <div className="flex flex-col mr-auto">
-              <h3>{hotel.hotel.name}</h3>
-              <p>
-                <span className="text-sm">
-                  {hotel.offers[0].price.currency}
-                </span>{" "}
-                <span className="text-xl">{hotel.offers[0].price.total}</span>
-              </p>
-            </div>
-            <Button
-              type="button"
-              variant="contained"
-              color="primary"
-              disabled={loading}
-              style={{ width: "100px", height: "40px" }}
-              onClick={() => navigate(`/book-hotel/${hotel.offers[0].id}`)}
-            >
-              {loading ? (
-                <div className="flex items-center gap-1">
-                  <CircularProgress size={18} />
-                </div>
-              ) : (
-                "Book"
-              )}
-            </Button>
-          </li>
-        ))}
-      </ul>
+      </div> */}
     </div>
   );
 }

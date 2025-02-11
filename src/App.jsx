@@ -6,31 +6,31 @@ import CircularProgress from "@mui/material/CircularProgress";
 import { useDispatch, useSelector } from "react-redux";
 import { Outlet } from "react-router-dom";
 import { setToken } from "./store/authSlice";
+import Header from "./components/Header";
+import { ModeThemeProvider } from "./context/context";
 
 function App() {
-  // const dispatch = useDispatch();
+  const [themeMode, setThemeMode] = useState("dark");
+  const lightTheme = () => {
+    setThemeMode("light");
+  };
+  const darkTheme = () => {
+    setThemeMode("dark");
+  };
 
-  // async function authToken() {
-  //   try {
-  //     return await axios.get("http://localhost:3131/api/login");
-  //   } catch (error) {
-  //     console.log(error);
-  //   }
-  // }
-
-  // useEffect(() => {
-  //   authToken().then((userAuthToken) => {
-  //     const payload = setToken(userAuthToken.data)
-  //     console.log(payload);
-  //     dispatch(payload);
-  //   });
-  // }, []);
+  useEffect(() => {
+    document.querySelector("html").classList.remove("light", "dark");
+    document.querySelector("html").classList.add(themeMode);
+  }, [themeMode]);
 
   return (
     <div className="w-full block">
-      <main>
-        <Outlet />
-      </main>
+      <ModeThemeProvider value={{ themeMode, lightTheme, darkTheme }}>
+        <Header />
+        <main>
+          <Outlet />
+        </main>
+      </ModeThemeProvider>
     </div>
   );
 }
