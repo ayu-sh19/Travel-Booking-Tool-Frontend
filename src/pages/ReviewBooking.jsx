@@ -10,6 +10,7 @@ import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { yellow } from "@mui/material/colors";
 import { useDispatch } from "react-redux";
 import { setBookData } from "../store/authSlice";
+import config from "../config/config";
 
 function Book() {
   const { id } = useParams();
@@ -41,6 +42,7 @@ function Book() {
 
   async function book() {
     try {
+      console.log("Book Call");
       return await axios.get(`${config.apiUrl}/api/book-hotel`, {
         params: { id },
       });
