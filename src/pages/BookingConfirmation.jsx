@@ -4,6 +4,7 @@ import { useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import globe from "../assets/globe.gif";
 import confetti from "canvas-confetti";
+import config from "../config/config";
 
 function BookingConfirmation() {
   const { offerId } = useParams();
@@ -16,7 +17,7 @@ function BookingConfirmation() {
   const bookHotel = async (guestInfo) => {
     try {
       return await axios.post(
-        "http://localhost:3131/api/booking",
+        `${config.apiUrl}/api/booking`,
         {
           data: {
             type: "hotel-order",
@@ -94,7 +95,7 @@ function BookingConfirmation() {
   }, []);
   return !loading ? (
     !bookingFailure ? (
-      <div className="flex justify-center h-screen w-full  fixed overflow-hidden">
+      <div className="flex justify-center h-screen w-full  fixed overflow-hidden ">
         <div className="w-full max-w-sm mb-50 p-4 m-auto bg-white border border-gray-200 rounded-lg shadow-sm sm:p-8 dark:bg-gray-800 dark:border-gray-700">
           <h5 className="mb-4 text-xl font-medium text-gray-500 dark:text-gray-400">
             Hotel Confirmation

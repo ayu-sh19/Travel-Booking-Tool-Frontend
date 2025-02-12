@@ -41,7 +41,7 @@ function Book() {
 
   async function book() {
     try {
-      return await axios.get("http://localhost:3131/api/book-hotel", {
+      return await axios.get(`${config.apiUrl}/api/book-hotel`, {
         params: { id },
       });
     } catch (error) {
@@ -64,9 +64,12 @@ function Book() {
   }, []);
 
   return !loading ? (
-    <div className="bg-[url('./assets/desert.jpg')] bg-cover fixed overflow-hidden w-full " style={{minHeight: "100vh"}}>
+    <div
+      className="bg-[url('./assets/desert.jpg')] bg-cover fixed overflow-hidden w-full "
+      style={{ minHeight: "100vh" }}
+    >
       <div
-        className="grid" 
+        className="grid"
         style={{
           display: "grid",
           gridTemplateColumns: "3fr 1fr",
@@ -75,7 +78,9 @@ function Book() {
       >
         <div className="flex flex-col">
           <div className="w-full max-w-5xl p-4 ml-6 mt-5 rounded-2xl mr-auto bg-white border border-gray-200  shadow-sm sm:p-8 dark:bg-gray-800 dark:border-gray-700">
-            <h5 className="mb-4 text-xl font-mediumtext-gray-900 dark:text-white">Hotel</h5>
+            <h5 className="mb-4 text-xl font-mediumtext-gray-900 dark:text-white">
+              Hotel
+            </h5>
             <div className="flex items-baseline text-2xl text-gray-900 dark:text-white">
               {hotel?.hotel?.name}
             </div>
@@ -251,7 +256,9 @@ function Book() {
                   {!guestAdd ? (
                     ""
                   ) : (
-                    <p className="text-gray-900 dark:text-white">Guest Added Successfully !</p>
+                    <p className="text-gray-900 dark:text-white">
+                      Guest Added Successfully !
+                    </p>
                   )}
                 </div>
               </div>
